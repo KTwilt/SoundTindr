@@ -9,6 +9,17 @@
 </iframe>
 <div id="changetrack">Change Track / URL to my account ;)</div>
 </body>
+<script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
+<script>
+SC.initialize({
+  client_id: 'YOUR_CLIENT_ID'
+});
+
+// find all tracks with the genre 'punk' that have a tempo greater than 120 bpm.
+SC.get('/tracks', { genres: 'punk', bpm: { from: 120 } }, function(tracks) {
+  console.log(tracks);
+});
+</script>
 <script type="text/javascript">
 (function() {
     var iframe2 = document.querySelector('#widget2');
