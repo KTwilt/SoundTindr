@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="api.js"></script>
+</head>
+<body>
+<iframe id="player"></iframe>
+</body>
+<script>
+var iframeElement   = document.querySelector('iframe');
+var iframeElementID = iframeElement.id;
+var widget1         = SC.Widget(iframeElement);
+var widget2         = SC.Widget(iframeElementID);
+widget1.load("https://soundcloud.com/fettywap1738-zoo/fetty-wap-again");
+</script>
+</html>
