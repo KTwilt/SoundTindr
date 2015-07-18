@@ -66,8 +66,10 @@ SC.get('/resolve', { url: track_url }, function(track) {
 <script type="text/javascript">
 (function() {
     var iframe2 = document.querySelector('#widget2');
-    var widget2 = SC.Widget(iframe2);
+    window.widget2 = SC.Widget(iframe2);
     var newurl = 'http://soundcloud.com/bnzlovesyou';
+
+    var seekToTime = 25*60*1000;
 
     widget2.bind(SC.Widget.Events.READY, function() {
 	    console.log('ready');
@@ -79,9 +81,20 @@ SC.get('/resolve', { url: track_url }, function(track) {
 	    });
 	});
 
+	widget2.bind(SC.Widget.Events.PLAY_PROGRESS, function() {
+		console.log("progressing");
+	    widget2.getPosition(function(pos) {
+	    	if(pos >= seekToTime + 5000) {
+	    		widget2.pause();
+	    	}
+	    });
+	});
+
 	$( "#changetrack" ).click(function() {
-	 widget2.load(newurl);
-	});    
+	 //widget2.load(newurl);
+	 widget2.seekTo(seekToTime);
+	 widget2.play();
+	});
 
 }());
 </script>
