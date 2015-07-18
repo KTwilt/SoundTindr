@@ -23,22 +23,32 @@ SC.get('/tracks', { genres: 'punk', bpm: { from: 120 } }, function(tracks) {
 });
 
 
-var counter = 0;
-var page_size = 20;
+var page_size = 200;
+var bucket_size = 50000;
+var bucket = 0;
 
 // permalink to a track
 var track_url = 'https://soundcloud.com/innervisions/essential-mix-september-2013';
 
 SC.get('/resolve', { url: track_url }, function(track) {
-  console.log(track.duration);
+  var numBuckets = Math.round(track.duration / bucket_size);
+  var counterArray = [];
+  for (i=0; i<numBuckets; i++) {
+  	counterArray[i] = 0;
+  }
+
   SC.get('/tracks/' + track.id + '/comments',{ limit: page_size }, function(comments) {
     for (var i = 0; i < comments.length; i++) {
         //$('#result').append(comments[i].timestamp + ': ' + comments[i].body + '<br/>');
-
-        counter++;
-      	console.log(counter);
+        bucket = Math.round(comments[i].timestamp / bucket_size);
+        counterArray[bucket]++;
     }
+
+    console.log(counterArray);
   });
+
+  
+  
   /*
   SC.get('/tracks/' + track.id + '/comments',{ limit: page_size, offset: page_size}, function(comments) {
     for (var i = 0; i < comments.length; i++) {
