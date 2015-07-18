@@ -2,17 +2,33 @@
 <html>
 <head>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="api.js"></script>
+<script type="text/javascript" src="api.js"></script>
 </head>
 <body>
-<iframe id="player"></iframe>
+<iframe id="widget2" width="100%" src = 'http://w.soundcloud.com/player/?url=http://soundcloud.com/barehouse_1'>
+</iframe>
+<div id="changetrack">Change Track / URL to my account ;)</div>
 </body>
-<script>
-var iframeElement   = document.querySelector('iframe');
-var iframeElementID = iframeElement.id;
-var widget1         = SC.Widget(iframeElement);
-var widget2         = SC.Widget(iframeElementID);
-widget1.load("https://soundcloud.com/fettywap1738-zoo/fetty-wap-again");
+<script type="text/javascript">
+(function() {
+    var iframe2 = document.querySelector('#widget2');
+    var widget2 = SC.Widget(iframe2);
+    var newurl = 'http://soundcloud.com/bnzlovesyou';
+
+    widget2.bind(SC.Widget.Events.READY, function() {
+	    alert('ready');
+	    widget2.bind(SC.Widget.Events.PLAY, function(eventData) {
+	        alert('Playing..');
+	    });
+	    widget2.bind(SC.Widget.Events.PAUSE, function(eventData) {
+	        alert('PAUSE..');
+	    });
+	});
+
+	$( "#changetrack" ).click(function() {
+	 widget2.load(newurl);
+	});    
+
+}());
 </script>
 </html>
